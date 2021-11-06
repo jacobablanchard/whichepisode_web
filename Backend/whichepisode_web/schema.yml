@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: WhichEpisode
+  version: 1.0.0
+  description: lol my description
+paths:
+  /api/welcome:
+    get:
+      operationId: api_welcome_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
