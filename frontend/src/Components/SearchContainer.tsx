@@ -4,13 +4,14 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import axios from "axios";
 import { TVSearchResponse } from "../Classes/TVSearchResponse";
 import { TVSearchResult } from "../Classes/TVSearchResult";
+import SearchResultList from "./SearchResultList";
 
 async function getSearchResult(searchParam: string): Promise<TVSearchResponse> {
   const url =
     process.env.NODE_ENV === "development"
       ? `http://localhost:8000/api/search/${searchParam}`
       : `http://localhost:8000/api/search/${searchParam}`;
-  const { data } = await axios.get<TVSearchResponse>(url);
+  const { data } = await axios.get<TVSearchResponse>(encodeURI(url));
   return data;
 }
 
@@ -58,6 +59,7 @@ export default class SearchContainer extends React.Component<
             Search
           </Button>
         </InputGroup>
+        <SearchResultList searchResponse={this.state.searchResponse} />
       </div>
     );
   }
