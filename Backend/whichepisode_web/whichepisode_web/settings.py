@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -144,3 +145,37 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
 ]
+try:
+    _ = os.environ["DJANGO_DEBUG"]
+    print("Starting with DEBUG logging config")
+    myDebugLevel = "DEBUG"
+except KeyError:
+    print("Starting with INFO logging config")
+    myDebugLevel = "INFO"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+     "formatters":
+    {
+      "basic":
+      {
+        "format": "[%(asctime)s] - %(name)s - %(levelname)s - %(message)s",
+        "datefmt": "%d/%b/%Y %H:%M:%S"
+      },
+      "verbose":
+      {
+        "format": "%(asctime)s - %(pathname)-17s line:%(lineno)-4d - %(levelname)-8s - %(message)s"
+      }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'basic'
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': myDebugLevel,
+    },
+}
