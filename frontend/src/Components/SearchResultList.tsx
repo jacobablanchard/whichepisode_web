@@ -19,8 +19,8 @@ export default class SearchResultList extends React.Component<
   }
 
   public render() {
-    return this.props.searchResponse.results.map((a) => (
-      <SearchResult data={a} />
+    return this.props.searchResponse.results.map((object, i) => (
+      <SearchResult data={object} key={i} />
     ));
   }
 }
