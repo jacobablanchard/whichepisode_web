@@ -1,10 +1,9 @@
 import * as React from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import axios from "axios";
 import { TVSearchResponse } from "../Classes/TVSearchResponse";
-import { TVSearchResult } from "../Classes/TVSearchResult";
 import SearchResultList from "./SearchResultList";
+import { TVSearchResult } from "../Classes/TVSearchResult";
 
 async function getSearchResult(searchParam: string): Promise<TVSearchResponse> {
   const url =
@@ -15,11 +14,14 @@ async function getSearchResult(searchParam: string): Promise<TVSearchResponse> {
   return data;
 }
 
-export interface ISearchContainerProps {}
+export interface ISearchContainerProps {
+  newShowSelectedCallback: (a: TVSearchResult) => void;
+}
 
 export interface ISearchContainerState {
   searchString: string;
   searchResponse: TVSearchResponse;
+  selectedIndex: number | null;
 }
 
 export default class SearchContainer extends React.Component<
@@ -32,6 +34,7 @@ export default class SearchContainer extends React.Component<
     this.state = {
       searchString: "",
       searchResponse: new TVSearchResponse(),
+      selectedIndex: null,
     };
   }
 
@@ -40,6 +43,13 @@ export default class SearchContainer extends React.Component<
     this.setState({
       searchResponse: data,
       searchString: newString,
+      selectedIndex: null,
+    });
+  }
+
+  private onNewShowSelected(newIndex: number, newData: TVSearchResult) {
+    this.setState({
+      selectedIndex: newIndex,
     });
   }
 
@@ -59,7 +69,13 @@ export default class SearchContainer extends React.Component<
             Search
           </Button>
         </InputGroup>
-        <SearchResultList searchResponse={this.state.searchResponse} />
+        <SearchResultList
+          searchResponse={this.state.searchResponse}
+          newShowSelectedCallback={(index: number, data: TVSearchResult) =>
+            this.onNewShowSelected(index, data)
+          }
+          selectedShowIndex={this.state.selectedIndex}
+        />
       </div>
     );
   }

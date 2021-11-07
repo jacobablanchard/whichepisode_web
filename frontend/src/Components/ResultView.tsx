@@ -1,7 +1,8 @@
 import * as React from "react";
+import { TVSearchResult } from "../Classes/TVSearchResult";
 
 export interface IResultViewProps {
-  showID?: number;
+  show: TVSearchResult;
 }
 
 export interface IResultViewState {}
@@ -17,6 +18,6 @@ export default class ResultView extends React.Component<
   }
 
   public render() {
-    return <div></div>;
+    return <div>ResultView</div>;
   }
 }
