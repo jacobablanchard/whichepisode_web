@@ -8,7 +8,8 @@ from . import remote_api_caller
 @api_view(["GET"])
 def search(request, searchString="", pageNum=1):
     params={
-        "query": searchString
+        "query": searchString,
+        "language": "en"
     }
     resp = remote_api_caller.make_remote_api_call("/search/tv", params=params)
     print(resp)
