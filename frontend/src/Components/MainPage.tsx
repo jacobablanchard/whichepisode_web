@@ -1,6 +1,6 @@
 import * as React from "react";
 import ResultView from "./ResultView";
-import SearchContainer from "./SearchContainer";
+import SearchContainer from "./SearchContainer/SearchContainer";
 import { Stack } from "react-bootstrap";
 import { TVSearchResult } from "../Classes/TVSearchResult";
 

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import axios from "axios";
-import { TVSearchResponse } from "../Classes/TVSearchResponse";
-import SearchResultList from "./SearchResultList";
-import { TVSearchResult } from "../Classes/TVSearchResult";
+import { TVSearchResponse } from "../../Classes/TVSearchResponse";
+import SearchResultList from "../SearchResultList";
+import { TVSearchResult } from "../../Classes/TVSearchResult";
 
 async function getSearchResult(searchParam: string): Promise<TVSearchResponse> {
   const url =
