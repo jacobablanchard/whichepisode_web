@@ -1,8 +1,9 @@
 import * as React from "react";
-import ResultView from "./ResultView";
-import SearchContainer from "./SearchContainer/SearchContainer";
+import ResultView from "../ResultView/ResultView";
+import SearchContainer from "../SearchContainer/SearchContainer";
 import { Stack } from "react-bootstrap";
-import { TVSearchResult } from "../Classes/TVSearchResult";
+import { TVSearchResult } from "../../Classes/TVSearchResult";
+import "./MainPage.css";
 
 export interface IMainPageProps {}
 
@@ -36,11 +37,15 @@ export default class MainPage extends React.Component<
           Allows you to pick a random episode from a show of your choice
         </div>
         <Stack direction="horizontal">
-          <SearchContainer
-            newShowSelectedCallback={this.onNewShowSelected}
-          ></SearchContainer>
+          <div className="searchContainer">
+            <SearchContainer
+              newShowSelectedCallback={(show) => this.onNewShowSelected(show)}
+            ></SearchContainer>
+          </div>
           <div className="border-right" />
-          <ResultView show={this.state.selectedShow}></ResultView>
+          <div className="resultView">
+            <ResultView show={this.state.selectedShow}></ResultView>
+          </div>
         </Stack>
       </div>
     );
