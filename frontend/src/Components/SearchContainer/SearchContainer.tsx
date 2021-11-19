@@ -6,13 +6,20 @@ import SearchResultList from "../SearchResultList";
 import { TVSearchResult } from "../../Classes/TVSearchResult";
 import "./SearchContainer.css";
 
-async function getSearchResult(searchParam: string): Promise<TVSearchResponse> {
+async function getSearchResult(
+  searchParam: string
+): Promise<TVSearchResponse | null> {
   const url =
     process.env.NODE_ENV === "development"
       ? `http://localhost:8000/api/search/${searchParam}`
       : `http://localhost:8000/api/search/${searchParam}`;
-  const { data } = await axios.get<TVSearchResponse>(encodeURI(url));
-  return data;
+  try {
+    const { data } = await axios.get<TVSearchResponse>(encodeURI(url));
+    return data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 }
 
 export interface ISearchContainerProps {
@@ -40,12 +47,21 @@ export default class SearchContainer extends React.Component<
   }
 
   private async onSearchStringChanged(newString: string) {
-    const data = await getSearchResult(newString);
-    this.setState({
-      searchResponse: data,
-      searchString: newString,
-      selectedIndex: null,
-    });
+    if (newString !== "") {
+      const data = await getSearchResult(newString);
+      if (data === null) {
+        this.setState({
+          searchString: newString,
+          selectedIndex: null,
+        });
+      } else {
+        this.setState({
+          searchResponse: data,
+          searchString: newString,
+          selectedIndex: null,
+        });
+      }
+    }
   }
 
   private onNewShowSelected(newIndex: number, newData: TVSearchResult) {
