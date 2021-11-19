@@ -1,10 +1,5 @@
 .searchContainer {
-  width: 20%;
 }
 
 .resultView {
-  width: auto fit-content;
-  position: relative;
-  vertical-align: top;
-  align-items: flex-start;
 }
