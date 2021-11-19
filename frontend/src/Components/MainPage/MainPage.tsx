@@ -36,7 +36,7 @@ export default class MainPage extends React.Component<
         <div>
           Allows you to pick a random episode from a show of your choice
         </div>
-        <Container fluid={true}>
+        <Container fluid>
           <Row>
             <Col xs lg="3">
               <div className="searchContainer">
@@ -47,7 +47,7 @@ export default class MainPage extends React.Component<
                 ></SearchContainer>
               </div>
             </Col>
-            <Col md="auto">
+            <Col>
               <div className="resultView">
                 <ResultView show={this.state.selectedShow}></ResultView>
               </div>

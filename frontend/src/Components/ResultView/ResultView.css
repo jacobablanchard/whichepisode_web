@@ -1,1 +1,10 @@
+.resultView {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  align-self: center;
+}
 
+.movieTitle {
+  text-align: center;
+}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { TVSearchResult } from "../../Classes/TVSearchResult";
+import "./ResultView.css";
 
 export interface IResultViewProps {
   show: TVSearchResult;
@@ -18,6 +19,10 @@ export default class ResultView extends React.Component<
   }
 
   public render() {
-    return <div>{this.props.show.name}</div>;
+    return (
+      <div className="resultView">
+        <h1 className="movieTitle">{this.props.show.name}</h1>
+      </div>
+    );
   }
 }

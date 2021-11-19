@@ -68,6 +68,7 @@ export default class SearchContainer extends React.Component<
     this.setState({
       selectedIndex: newIndex,
     });
+    this.props.newShowSelectedCallback(newData);
   }
 
   public render() {

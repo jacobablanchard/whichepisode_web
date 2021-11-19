@@ -2,4 +2,6 @@
 }
 
 .resultView {
+  align-items: stretch;
+  align-content: stretch;
 }
