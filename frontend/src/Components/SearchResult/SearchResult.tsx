@@ -2,6 +2,7 @@ import * as React from "react";
 import { Stack } from "react-bootstrap";
 import { TVSearchResult } from "../../Classes/TVSearchResult";
 import { ResolvedURL } from "../../Classes/ResolvedURL";
+import PosternotFound from "./PosterNotFound.png";
 import axios from "axios";
 
 import "./SearchResult.css";
@@ -68,7 +69,15 @@ export default class SearchResult extends React.Component<
           direction="horizontal"
           className={this.props.isSelected ? "SearchResultSelected" : ""}
         >
-          <img src={this.state.posterURL} alt="TV Show Poster" />
+          <img
+            src={
+              this.state.posterURL === ""
+                ? PosternotFound
+                : this.state.posterURL
+            }
+            alt="TV Show Poster"
+            className="posterImage"
+          />
           <div>{myData.name}</div>
         </Stack>
       </div>
