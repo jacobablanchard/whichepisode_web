@@ -52,3 +52,9 @@ def lookup_poster_url(request, lookup_base_path=""):
 
     
     return JsonResponse({"resolvedURL" : "{}{}/{}".format(configObj.baseURL, configObj.smallestImageSize, lookup_base_path)})
+
+@api_view(["GET"])
+def lookup_tv_series_info(request, id):
+    resp = remote_api_caller.make_remote_api_call("/tv/{}".format(id))
+    the_data = resp.json()
+    return JsonResponse(the_data)
