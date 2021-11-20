@@ -8,7 +8,7 @@ import "./MainPage.css";
 export interface IMainPageProps {}
 
 export interface IMainPageState {
-  selectedShow: TVSearchResult;
+  selectedShow: TVSearchResult | null;
 }
 
 export default class MainPage extends React.Component<
@@ -19,7 +19,7 @@ export default class MainPage extends React.Component<
     super(props);
 
     this.state = {
-      selectedShow: new TVSearchResult(),
+      selectedShow: null,
     };
   }
 

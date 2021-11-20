@@ -6,7 +6,7 @@ import globals from "../../globals";
 import "./ResultView.css";
 
 export interface IResultViewProps {
-  show: TVSearchResult;
+  show: TVSearchResult | null;
 }
 
 export interface IResultViewState {
@@ -30,11 +30,12 @@ export default class ResultView extends React.Component<
   }
 
   async componentDidUpdate(prevProps: IResultViewProps) {
-    if (prevProps.show.backdrop_path !== this.props.show.backdrop_path)
-      this.updateImageURL();
+    if (this.props.show === null) return;
+    if (prevProps.show !== this.props.show) await this.updateImageURL();
   }
 
   private async updateImageURL() {
+    if (this.props.show === null) return;
     if (this.props.show.backdrop_path === null) {
       return;
     }
@@ -49,15 +50,18 @@ export default class ResultView extends React.Component<
   }
 
   public render() {
-    return (
+    return this.props.show !== null ? (
       <div className="resultView">
         <h1 className="movieTitle">{this.props.show.name}</h1>
+        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt*/}
         <img
           src={this.state.bannerURL === null ? "" : this.state.bannerURL}
           alt="The banner image of the show"
           className="backdropImage"
         ></img>
       </div>
+    ) : (
+      <div />
     );
   }
 }
