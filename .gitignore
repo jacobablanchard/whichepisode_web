@@ -168,3 +168,4 @@ frontend/yarn-debug.log*
 frontend/yarn-error.log*
 ### end react ###
 whichEpisode.code-workspace
+.vscode/launch.json
