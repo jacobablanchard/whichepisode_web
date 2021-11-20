@@ -5,5 +5,6 @@ from django.db import models
 
 class TheMovieDBConfiguration(models.Model):
     smallestImageSize = models.TextField()
+    bestPosterSize = models.TextField()
     baseURL = models.TextField()
     dateRetrieved = models.DateTimeField()

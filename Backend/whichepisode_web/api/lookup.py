@@ -17,8 +17,9 @@ def create_new_config():
     resp = remote_api_caller.make_remote_api_call("/configuration")
     the_data = resp.json()
     base_url = the_data["images"]["secure_base_url"]
-    prefered_width = the_data["images"]["poster_sizes"][0]
-    config = TheMovieDBConfiguration(smallestImageSize=prefered_width, baseURL=base_url, dateRetrieved=datetime.now(timezone.utc))
+    prefered_width = the_data["images"]["poster_sizes"][4]
+    backdrop_size = the_data["images"]["backdrop_sizes"][1]
+    config = TheMovieDBConfiguration(bestPosterSize=backdrop_size, smallestImageSize=prefered_width, baseURL=base_url, dateRetrieved=datetime.now(timezone.utc))
     config.save()
     return config
 
@@ -29,14 +30,15 @@ def update_config(old_config_entry):
     resp = remote_api_caller.make_remote_api_call("/configuration")
     the_data = resp.json()
     base_url = the_data["images"]["secure_base_url"]
-    prefered_width = the_data["images"]["poster_sizes"][0]
+    prefered_width = the_data["images"]["poster_sizes"][4]
+    backdrop_size = the_data["images"]["backdrop_sizes"][1]
     old_config_entry.dateRetrieved=datetime.now(timezone.utc)
     old_config_entry.baseURL = base_url
     old_config_entry.smallestImageSize = prefered_width
+    old_config_entry.bestPosterSize = backdrop_size
     old_config_entry.save()
 
-@api_view(["GET"])
-def lookup_poster_url(request, lookup_base_path=""):
+def get_config():
     config = TheMovieDBConfiguration.objects.all()
     if len(config) == 0:
         logger.info("No entry in database for TheMovieDB config. Creating one")
@@ -49,9 +51,17 @@ def lookup_poster_url(request, lookup_base_path=""):
             update_config(configObj)
         else:
             logger.debug("config entry found")
+    return configObj
 
-    
+@api_view(["GET"])
+def lookup_poster_url(request, lookup_base_path=""):
+    configObj = get_config()
     return JsonResponse({"resolvedURL" : "{}{}/{}".format(configObj.baseURL, configObj.smallestImageSize, lookup_base_path)})
+
+@api_view(["GET"])
+def lookup_backdrop_url(request, lookup_base_path=""):
+    configObj = get_config()
+    return JsonResponse({"resolvedURL" : "{}{}/{}".format(configObj.baseURL, configObj.bestPosterSize, lookup_base_path)})
 
 @api_view(["GET"])
 def lookup_tv_series_info(request, id):
