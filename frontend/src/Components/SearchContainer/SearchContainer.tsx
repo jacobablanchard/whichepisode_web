@@ -10,7 +10,7 @@ import globals from "../../globals";
 async function getSearchResult(
   searchParam: string
 ): Promise<TVSearchResponse | null> {
-  const url = globals.backendServer + `/lookup/search${searchParam}`;
+  const url = globals.backendServer + `/search/${searchParam}`;
 
   try {
     const { data } = await axios.get<TVSearchResponse>(encodeURI(url));
