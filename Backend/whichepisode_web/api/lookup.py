@@ -68,3 +68,9 @@ def lookup_tv_series_info(request, id):
     resp = remote_api_caller.make_remote_api_call("/tv/{}".format(id))
     the_data = resp.json()
     return JsonResponse(the_data)
+
+@api_view(["GET"])
+def lookup_tv_season_info(request, id, seasonNum):
+    resp = remote_api_caller.make_remote_api_call("/tv/{}/season/{}".format(id,seasonNum))
+    the_data = resp.json()
+    return JsonResponse(the_data)
