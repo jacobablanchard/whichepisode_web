@@ -6,6 +6,7 @@ import PosternotFound from "./PosterNotFound.png";
 import axios from "axios";
 
 import "./SearchResult.css";
+import globals from "../../globals";
 
 export interface ISearchResultProps {
   data: TVSearchResult;
@@ -38,9 +39,9 @@ export default class SearchResult extends React.Component<
       return;
     }
     const url =
-      process.env.NODE_ENV === "development"
-        ? `http://localhost:8000/api/lookup/poster_url${this.props.data.poster_path}`
-        : `http://localhost:8000/api/lookup/poster_url${this.props.data.poster_path}`;
+      globals.backendServer +
+      `/lookup/poster_url${this.props.data.poster_path}`;
+
     const { data } = await axios.get<ResolvedURL>(encodeURI(url));
     this.setState({
       posterURL: data.resolvedURL,

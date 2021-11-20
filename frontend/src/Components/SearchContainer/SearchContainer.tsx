@@ -5,14 +5,13 @@ import { TVSearchResponse } from "../../Classes/TVSearchResponse";
 import SearchResultList from "../SearchResultList";
 import { TVSearchResult } from "../../Classes/TVSearchResult";
 import "./SearchContainer.css";
+import globals from "../../globals";
 
 async function getSearchResult(
   searchParam: string
 ): Promise<TVSearchResponse | null> {
-  const url =
-    process.env.NODE_ENV === "development"
-      ? `http://localhost:8000/api/search/${searchParam}`
-      : `http://localhost:8000/api/search/${searchParam}`;
+  const url = globals.backendServer + `/lookup/search${searchParam}`;
+
   try {
     const { data } = await axios.get<TVSearchResponse>(encodeURI(url));
     return data;

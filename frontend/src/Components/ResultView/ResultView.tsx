@@ -2,6 +2,7 @@ import * as React from "react";
 import { TVSearchResult } from "../../Classes/TVSearchResult";
 import { ResolvedURL } from "../../Classes/ResolvedURL";
 import axios from "axios";
+import globals from "../../globals";
 import "./ResultView.css";
 
 export interface IResultViewProps {
@@ -38,9 +39,9 @@ export default class ResultView extends React.Component<
       return;
     }
     const url =
-      process.env.NODE_ENV === "development"
-        ? `http://localhost:8000/api/lookup/backdrop_url${this.props.show.backdrop_path}`
-        : `http://localhost:8000/api/lookup/backdrop_url${this.props.show.backdrop_path}`;
+      globals.backendServer +
+      `/lookup/backdrop_url${this.props.show.backdrop_path}`;
+
     const { data } = await axios.get<ResolvedURL>(encodeURI(url));
     this.setState({
       bannerURL: data.resolvedURL,
