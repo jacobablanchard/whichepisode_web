@@ -38,7 +38,11 @@ export default class MainPage extends React.Component<
         </div>
         <Container fluid>
           <Row>
-            <Col xs lg="3">
+            <Col
+              {...(this.state.selectedShow !== null
+                ? { xs: "3", lg: "3" } // Only apply column size limiting here if there's no show selected
+                : {})}
+            >
               <div className="searchContainer">
                 <SearchContainer
                   newShowSelectedCallback={(show) =>
