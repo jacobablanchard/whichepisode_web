@@ -47,11 +47,15 @@ export default class MainPage extends React.Component<
                 ></SearchContainer>
               </div>
             </Col>
-            <Col>
-              <div className="resultView">
-                <ResultView show={this.state.selectedShow}></ResultView>
-              </div>
-            </Col>
+            {this.state.selectedShow !== null ? (
+              <Col>
+                <div className="resultView">
+                  <ResultView showID={this.state.selectedShow.id}></ResultView>
+                </div>
+              </Col>
+            ) : (
+              <div />
+            )}
           </Row>
         </Container>
       </div>
