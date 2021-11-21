@@ -4,13 +4,13 @@ export interface SeriesInfo {
   backdrop_path: string;
   //created_by:           CreatedBy[];
   episode_run_time: number[];
-  first_air_date: Date;
+  first_air_date: string;
   //genres:               Genre[];
   homepage: string;
   id: number;
   in_production: boolean;
   languages: string[];
-  last_air_date: Date;
+  last_air_date: string;
   //last_episode_to_air:  LastEpisodeToAir;
   name: string;
   next_episode_to_air: null;
