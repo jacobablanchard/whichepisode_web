@@ -3,8 +3,9 @@ import { ResolvedURL } from "../../Classes/ResolvedURL";
 import axios from "axios";
 import globals from "../../globals";
 import "./ResultView.css";
-import ShowInfo from "../ShowInfoDisplay/ShowInfoDisplay";
-import { SeriesInfo } from "../../Classes/ShowInfo";
+import ShowInfoDisplay from "../ShowInfoDisplay/ShowInfoDisplay";
+import { SeriesInfo } from "../../Classes/SeriesInfo";
+import { Button } from "react-bootstrap";
 
 export interface IResultViewProps {
   showID: number;
@@ -64,6 +65,12 @@ export default class ResultView extends React.Component<
     });
   }
 
+  private onGenerateButtonClicked() {
+    const numElements = this.state.the_show?.seasons?.length;
+    if (numElements === undefined) return;
+    const random = Math.floor(Math.random() * numElements);
+  }
+
   public render() {
     return this.state.the_show !== null ? (
       <div className="resultView">
@@ -74,7 +81,16 @@ export default class ResultView extends React.Component<
           alt="The banner image of the show"
           className="backdropImage"
         ></img>
-        <ShowInfo series={this.state.the_show} />
+        <ShowInfoDisplay series={this.state.the_show} />
+        <div className="d-grid gap-2">
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => this.onGenerateButtonClicked}
+          >
+            Get me an episode!
+          </Button>
+        </div>
       </div>
     ) : (
       <div />
