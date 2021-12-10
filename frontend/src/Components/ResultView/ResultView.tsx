@@ -6,6 +6,9 @@ import "./ResultView.css";
 import ShowInfoDisplay from "../ShowInfoDisplay/ShowInfoDisplay";
 import { SeriesInfo } from "../../Classes/SeriesInfo";
 import { Button } from "react-bootstrap";
+import { Season } from "../../Classes/Season";
+import { Episode } from "../../Classes/Episode";
+import EpisodeView from "../EpisodeView/EpisodeView";
 
 export interface IResultViewProps {
   showID: number;
@@ -14,6 +17,7 @@ export interface IResultViewProps {
 export interface IResultViewState {
   bannerURL: string | null;
   the_show: SeriesInfo | null;
+  generatedEpisode: Episode | null;
 }
 
 export default class ResultView extends React.Component<
@@ -26,6 +30,7 @@ export default class ResultView extends React.Component<
     this.state = {
       bannerURL: null,
       the_show: null,
+      generatedEpisode: null,
     };
   }
 
@@ -38,11 +43,17 @@ export default class ResultView extends React.Component<
     if (prevProps.showID !== this.props.showID) {
       await this.get_new_seriesInfo();
       await this.updateImageURL();
+      this.setState({
+        generatedEpisode: null,
+      });
     }
   }
 
   private async updateImageURL() {
-    if (this.state.the_show?.backdrop_path === "") {
+    if (
+      this.state.the_show?.backdrop_path === "" ||
+      this.state.the_show?.backdrop_path === null
+    ) {
       return;
     }
     const url =
@@ -65,10 +76,25 @@ export default class ResultView extends React.Component<
     });
   }
 
-  private onGenerateButtonClicked() {
-    const numElements = this.state.the_show?.seasons?.length;
-    if (numElements === undefined) return;
-    const random = Math.floor(Math.random() * numElements);
+  private async onGenerateButtonClicked() {
+    if (this.state.the_show === null) return;
+    const numSeasons = this.state.the_show?.seasons?.length;
+    if (numSeasons === undefined) return;
+    const chosen_season = Math.floor(Math.random() * numSeasons);
+
+    const url =
+      globals.backendServer +
+      `/lookup/tv_season_info/${this.props.showID}/season/${this.state.the_show.seasons[chosen_season].season_number}`;
+    const { data } = await axios.get<Season>(encodeURI(url));
+
+    if (data === undefined || data === null) return;
+    if (data.episodes === undefined || data.episodes === null) return;
+    const numEpisodes = data.episodes?.length;
+    if (numEpisodes === undefined) return;
+    const chosen_episode_index = Math.floor(Math.random() * numEpisodes);
+    this.setState({
+      generatedEpisode: data.episodes[chosen_episode_index],
+    });
   }
 
   public render() {
@@ -86,11 +112,12 @@ export default class ResultView extends React.Component<
           <Button
             variant="primary"
             size="lg"
-            onClick={() => this.onGenerateButtonClicked}
+            onClick={() => this.onGenerateButtonClicked()}
           >
             Get me an episode!
           </Button>
         </div>
+        <EpisodeView episode={this.state.generatedEpisode} />
       </div>
     ) : (
       <div />
