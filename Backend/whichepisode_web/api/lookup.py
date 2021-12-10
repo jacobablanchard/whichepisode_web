@@ -19,7 +19,8 @@ def create_new_config():
     base_url = the_data["images"]["secure_base_url"]
     prefered_width = the_data["images"]["poster_sizes"][4]
     backdrop_size = the_data["images"]["backdrop_sizes"][1]
-    config = TheMovieDBConfiguration(bestPosterSize=backdrop_size, smallestImageSize=prefered_width, baseURL=base_url, dateRetrieved=datetime.now(timezone.utc))
+    still_size = the_data["images"]["still_sizes"][-1]
+    config = TheMovieDBConfiguration(bestPosterSize=backdrop_size, smallestImageSize=prefered_width, still_size=still_size, baseURL=base_url, dateRetrieved=datetime.now(timezone.utc))
     config.save()
     return config
 
@@ -32,10 +33,12 @@ def update_config(old_config_entry):
     base_url = the_data["images"]["secure_base_url"]
     prefered_width = the_data["images"]["poster_sizes"][4]
     backdrop_size = the_data["images"]["backdrop_sizes"][1]
+    still_size = the_data["images"]["still_size"][-1]
     old_config_entry.dateRetrieved=datetime.now(timezone.utc)
     old_config_entry.baseURL = base_url
     old_config_entry.smallestImageSize = prefered_width
     old_config_entry.bestPosterSize = backdrop_size
+    old_config_entry.still_size = still_size
     old_config_entry.save()
 
 def get_config():
@@ -62,6 +65,11 @@ def lookup_poster_url(request, lookup_base_path=""):
 def lookup_backdrop_url(request, lookup_base_path=""):
     configObj = get_config()
     return JsonResponse({"resolvedURL" : "{}{}/{}".format(configObj.baseURL, configObj.bestPosterSize, lookup_base_path)})
+
+@api_view(["GET"])
+def lookup_episode_still_url(request, lookup_base_path=""):
+    configObj = get_config()
+    return JsonResponse({"resolvedURL" : "{}{}/{}".format(configObj.baseURL, configObj.still_size, lookup_base_path)})
 
 @api_view(["GET"])
 def lookup_tv_series_info(request, id):
