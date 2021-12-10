@@ -1,4 +1,4 @@
-import { Season } from "./Season";
+import { SeasonInfo } from "./SeasonInfo";
 
 export interface SeriesInfo {
   backdrop_path: string;
@@ -25,7 +25,7 @@ export interface SeriesInfo {
   poster_path: string;
   production_companies: any[];
   // production_countries: ProductionCountry[];
-  seasons: Season[];
+  seasons: SeasonInfo[];
   // spoken_languages:     SpokenLanguage[];
   status: string;
   tagline: string;
