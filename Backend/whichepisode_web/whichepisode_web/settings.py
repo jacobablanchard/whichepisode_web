@@ -34,9 +34,14 @@ except KeyError:
     myDebugLevel = "INFO"
     try:
         _ = os.environ["DJANGO_DEBUG_PROD"]
+        print("Production debug")
         SECRET_KEY = 'django-insecure-ki6prx(=ud3c2df13#y-2tg$2klp!1j@6=bz$awz2tn*g$4e#4'
     except KeyError:
+        print("Production")
         SECRET_KEY = os.environ["SECRET_KEY"]
+        SECURE_SSL_REDIRECT = True
+        CSRF_COOKIE_SECURE = True
+        SESSION_COOKIE_SECURE = True
 
 
 ALLOWED_HOSTS =  ['localhost', '127.0.0.1']
