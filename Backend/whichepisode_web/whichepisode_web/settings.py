@@ -21,17 +21,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ki6prx(=ud3c2df13#y-2tg$2klp!1j@6=bz$awz2tn*g$4e#4'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+try:
+    _ = os.environ["DJANGO_DEBUG"]
+    print("Starting with DEBUG logging config")
+    DEBUG = True
+    SECRET_KEY = 'django-insecure-ki6prx(=ud3c2df13#y-2tg$2klp!1j@6=bz$awz2tn*g$4e#4'
+    myDebugLevel = "DEBUG"
+except KeyError:
+    print("Starting with INFO logging config")
+    DEBUG = False
+    SECRET_KEY = 'django-insecure-ki6prx(=ud3c2df13#y-2tg$2klp!1j@6=bz$awz2tn*g$4e#4'
+    myDebugLevel = "INFO"
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS =  ['localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -145,13 +156,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
 ]
-try:
-    _ = os.environ["DJANGO_DEBUG"]
-    print("Starting with DEBUG logging config")
-    myDebugLevel = "DEBUG"
-except KeyError:
-    print("Starting with INFO logging config")
-    myDebugLevel = "INFO"
 
 LOGGING = {
     'version': 1,
@@ -179,3 +183,5 @@ LOGGING = {
         'level': myDebugLevel,
     },
 }
+
+STATIC_ROOT = BASE_DIR / 'staticfiles' # For whitenoise. Where our frontend will live

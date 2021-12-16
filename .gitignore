@@ -169,3 +169,4 @@ frontend/yarn-error.log*
 ### end react ###
 whichEpisode.code-workspace
 .vscode/launch.json
+Backend/whichepisode_web/staticfiles/*
