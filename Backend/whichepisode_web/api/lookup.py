@@ -33,7 +33,7 @@ def update_config(old_config_entry):
     base_url = the_data["images"]["secure_base_url"]
     prefered_width = the_data["images"]["poster_sizes"][4]
     backdrop_size = the_data["images"]["backdrop_sizes"][1]
-    still_size = the_data["images"]["still_size"][-1]
+    still_size = the_data["images"]["still_sizes"][-1]
     old_config_entry.dateRetrieved=datetime.now(timezone.utc)
     old_config_entry.baseURL = base_url
     old_config_entry.smallestImageSize = prefered_width
