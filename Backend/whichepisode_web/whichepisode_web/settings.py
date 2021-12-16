@@ -31,8 +31,12 @@ try:
 except KeyError:
     print("Starting with INFO logging config")
     DEBUG = False
-    SECRET_KEY = 'django-insecure-ki6prx(=ud3c2df13#y-2tg$2klp!1j@6=bz$awz2tn*g$4e#4'
     myDebugLevel = "INFO"
+    try:
+        _ = os.environ["DJANGO_DEBUG_PROD"]
+        SECRET_KEY = 'django-insecure-ki6prx(=ud3c2df13#y-2tg$2klp!1j@6=bz$awz2tn*g$4e#4'
+    except KeyError:
+        SECRET_KEY = os.environ["SECRET_KEY"]
 
 
 ALLOWED_HOSTS =  ['localhost', '127.0.0.1']
@@ -56,9 +60,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -71,7 +75,7 @@ ROOT_URLCONF = 'whichepisode_web.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "build")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,6 +86,11 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_DIRS = [
+  # Tell Django where to look for React's static files (css, js)
+  os.path.join(BASE_DIR, "build/static"),
 ]
 
 WSGI_APPLICATION = 'whichepisode_web.wsgi.application'
@@ -155,6 +164,7 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
+    "http://127.0.0.1:8000"
 ]
 
 LOGGING = {
@@ -184,4 +194,5 @@ LOGGING = {
     },
 }
 
-STATIC_ROOT = BASE_DIR / 'staticfiles' # For whitenoise. Where our frontend will live
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
