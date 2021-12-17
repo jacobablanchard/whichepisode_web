@@ -5,3 +5,4 @@ djangorestframework==3.12.4
 drf-spectacular # for api documentation
 django-cors-headers
 whitenoise
+requests
