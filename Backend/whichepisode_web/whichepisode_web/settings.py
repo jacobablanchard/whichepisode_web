@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.core.management.commands.runserver import Command as runserver
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +41,9 @@ except KeyError:
         print("Production")
         #print(os.environ)
         SECRET_KEY = os.environ["SECRET_KEY"]
+        #ALLOWED_HOSTS = ['*']
+        #runserver.default_port = os.environ["PORT"]
+        #runserver.default_addr = '0.0.0.0'
         #SECURE_SSL_REDIRECT = True
         #CSRF_COOKIE_SECURE = True
         #SESSION_COOKIE_SECURE = True
