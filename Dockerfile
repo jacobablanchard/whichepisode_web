@@ -27,8 +27,7 @@ RUN python -m pip install -r requirements.txt
 # collect the static files, make our database migrations, and run them
 # we'll just use the debug argument here because all we need to do is collect the static files
 # debug shouldn't be set when we start running
-RUN DJANGO_DEBUG=1 python ./whichepisode_web/manage.py collectstatic && python ./whichepisode_web/manage.py makemigrations && python ./whichepisode_web/manage.py migrate
-
+RUN DJANGO_DEBUG=1 python ./whichepisode_web/manage.py collectstatic && DJANGO_DEBUG=1 python ./whichepisode_web/manage.py makemigrations && DJANGO_DEBUG=1 python ./whichepisode_web/manage.py migrate
 EXPOSE 8000
 
 
