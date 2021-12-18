@@ -171,3 +171,4 @@ whichEpisode.code-workspace
 .vscode/launch.json
 Backend/whichepisode_web/staticfiles/*
 buildLocal.sh
+runLocal.sh

@@ -32,4 +32,4 @@ RUN DJANGO_DEBUG=1 python ./whichepisode_web/manage.py collectstatic
 EXPOSE 8000
 
 
-CMD ["python", "./whichepisode_web/manage.py", "runserver", "--nostatic", "0.0.0.0:8000"]
+CMD ["python", "./whichepisode_web/manage.py", "runserver", "--nostatic", "0.0.0.0:$PORT"]
