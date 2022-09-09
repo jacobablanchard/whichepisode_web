@@ -41,6 +41,8 @@ except KeyError:
         print("Production")
         #print(os.environ)
         SECRET_KEY = os.environ["SECRET_KEY"]
+        if SECRET_KEY is None:
+            raise EnvironmentError("Where's my secret key, dude?")
         #ALLOWED_HOSTS = ['*']
         #runserver.default_port = os.environ["PORT"]
         #runserver.default_addr = '0.0.0.0'
@@ -49,7 +51,7 @@ except KeyError:
         #SESSION_COOKIE_SECURE = True
 
 
-ALLOWED_HOSTS =  ['localhost', '127.0.0.1', 'whichepisode.herokuapp.com']
+ALLOWED_HOSTS =  ['localhost', '127.0.0.1', 'whichepisode.herokuapp.com', 'which-episode.onrender.com']
 
 
 # Application definition
@@ -176,7 +178,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
     "http://whichepisode.herokuapp.com",
-    "https://whichepisode.herokuapp.com"
+    "https://whichepisode.herokuapp.com",
+    "http://which-episode.onrender.com"
+    "https://which-episode.onrender.com",
 ]
 
 LOGGING = {
