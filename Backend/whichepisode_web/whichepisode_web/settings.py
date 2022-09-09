@@ -41,7 +41,7 @@ except KeyError:
         print("Production")
         #print(os.environ)
         SECRET_KEY = os.environ["SECRET_KEY"]
-        if SECRET_KEY is None:
+        if SECRET_KEY is None or SECRET_KEY == "":
             raise EnvironmentError("Where's my secret key, dude?")
         #ALLOWED_HOSTS = ['*']
         #runserver.default_port = os.environ["PORT"]
@@ -51,7 +51,7 @@ except KeyError:
         #SESSION_COOKIE_SECURE = True
 
 
-ALLOWED_HOSTS =  ['localhost', '127.0.0.1', 'whichepisode.herokuapp.com', 'which-episode.onrender.com']
+ALLOWED_HOSTS =  ['which-episode.onrender.com', 'localhost', '127.0.0.1', 'whichepisode.herokuapp.com']
 
 
 # Application definition
