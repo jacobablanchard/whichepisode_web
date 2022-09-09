@@ -179,7 +179,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://whichepisode.herokuapp.com",
     "https://whichepisode.herokuapp.com",
-    "http://which-episode.onrender.com"
+    "http://which-episode.onrender.com",
     "https://which-episode.onrender.com",
 ]
 
