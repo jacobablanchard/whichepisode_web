@@ -51,7 +51,8 @@ except KeyError:
         #SESSION_COOKIE_SECURE = True
 
 
-ALLOWED_HOSTS =  ['which-episode.onrender.com', 'localhost', '127.0.0.1', 'whichepisode.herokuapp.com']
+ALLOWED_HOSTS =  ['localhost', '127.0.0.1', 'whichepisode.jacobblanchard.dev']
+
 
 
 # Application definition
@@ -177,10 +178,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
     "http://127.0.0.1:8000",
-    "http://whichepisode.herokuapp.com",
-    "https://whichepisode.herokuapp.com",
-    "http://which-episode.onrender.com",
-    "https://which-episode.onrender.com",
+    "https://whichepisode.jacobblanchard.dev",
 ]
 
 LOGGING = {
