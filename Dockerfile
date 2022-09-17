@@ -28,6 +28,5 @@ RUN python -m pip install -r requirements.txt
 # we'll just use the debug argument here because all we need to do is collect the static files
 # debug shouldn't be set when we start running
 RUN DJANGO_DEBUG=1 python ./whichepisode_web/manage.py collectstatic && DJANGO_DEBUG=1 python ./whichepisode_web/manage.py makemigrations && DJANGO_DEBUG=1 python ./whichepisode_web/manage.py migrate
-EXPOSE 8000
 
 CMD python ./whichepisode_web/manage.py runserver --nostatic 0.0.0.0:$PORT
