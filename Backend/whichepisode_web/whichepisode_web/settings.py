@@ -54,7 +54,6 @@ except KeyError:
 ALLOWED_HOSTS =  ['localhost', '127.0.0.1', 'whichepisode.jacobblanchard.dev']
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
