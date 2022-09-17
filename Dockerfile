@@ -30,5 +30,4 @@ RUN python -m pip install -r requirements.txt
 RUN DJANGO_DEBUG=1 python ./whichepisode_web/manage.py collectstatic && DJANGO_DEBUG=1 python ./whichepisode_web/manage.py makemigrations && DJANGO_DEBUG=1 python ./whichepisode_web/manage.py migrate
 EXPOSE 8000
 
-
 CMD python ./whichepisode_web/manage.py runserver --nostatic 0.0.0.0:$PORT
